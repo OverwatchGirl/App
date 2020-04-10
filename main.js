@@ -26,6 +26,9 @@ app.on('ready', function(){
 
 });
 
+let server = require ("./server/server.js")
+
+mainWindow.webConetnts.openDevTools();
 //Handle create add window
 
 function createAddRdvWindow(){
