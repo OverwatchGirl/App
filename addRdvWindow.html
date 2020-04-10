@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset='utf-8'>
+    	<title> Ajouter un randez-vous </title>
+    	<script type="text/javascript" src="./contents/jquery/jquery-3.4.1.min.js"></script>
+    	<script src="./contents/bootstrap/js/bootstrap.min.js"></script>
+        <!-- Bootstrap CSS -->
+         <link rel="stylesheet" href="./contents/bootstrap//css/bootstrap.min.css" />
+    </head>
+    <body>
+      <h1>     Ajouter un randez-vous   </h1>
+      <form>
+          <div class="container">
+              <label>Code du patient</label>
+              <input type="text" id="code_pat_rdv" autofocus>
+               <label>Date</label>
+              <input type="date" id="date_rdv" autofocus>
+               <label>Heure</label>
+              <input type="time" id="time_rdv" autofocus>
+              <label>Objet</label>
+              <input type="text" id="objet_rdv" autofocus>
+
+          </div>
+          <button type="submit">Ajouter</button>
+      </form>
+      <script>
+        const electron = require('electron')
+        const {ipcRenderer} = electron;
+
+        const formRdv =document.querySelector('form');
+        form.addEventListener('submit',submitForm);
+
+        function submitForm(e){
+          e.preventDefault();
+          const Rdv = document.querySelector("#code_pat_rdv").value;
+          ipcRenderer.send('Rdv:add', Rdv);
+        }
+      </script>
+
+    </body>
+
+
+</html>
