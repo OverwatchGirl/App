@@ -1,0 +1,31 @@
+
+/*-------------------footer-----------------*/
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 60xp 0xp;
+  background-color: #b6c4c7 ;
+  color: white;
+  text-align: center;
+}
+
+h1 {
+	color : #484848;
+}
+.button {
+  transition-duration: 0.4s;
+  border-radius: 12px;
+  font-size: 16px;
+  padding: 10px 24px;
+  background-color: #484848;
+  color : white;
+}
+
+.button:hover {
+  background-color: #808080; /* Green */
+  color: white;
+}
+
+/*#8ee7f4; #65d9f2 ; aecdd4 */

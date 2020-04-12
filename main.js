@@ -26,8 +26,6 @@ app.on('ready', function(){
 
 });
 
-let server = require ("./server/server.js")
-
 //Handle create add window
 
 function createAddRdvWindow(){
@@ -43,6 +41,10 @@ function createAddRdvWindow(){
   	protocol: 'file:',
   	slashes: true
   }));
+  ///Carbage collection handle
+  addWindow.on('close', function(){
+  	addWindow = null;
+  });
 
 }
 function createAddPatWindow(){
@@ -55,6 +57,84 @@ function createAddPatWindow(){
   //load html into window
   addWindow.loadURL(url.format({
   	pathname: path.join(__dirname, 'addPatWindow.html'),
+  	protocol: 'file:',
+  	slashes: true
+  }));
+
+  ///Carbage collection handle
+  addWindow.on('close', function(){
+  	addWindow = null;
+  });
+
+}
+function createEditRdvWindow(){
+	//create new Window
+  addWindow = new BrowserWindow({
+  	width: 800,
+  	height: 500,
+  	title:'Modifier un randez-vous'
+  });
+  //load html into window
+  addWindow.loadURL(url.format({
+  	pathname: path.join(__dirname, 'editRdvWindow.html'),
+  	protocol: 'file:',
+  	slashes: true
+  }));
+  ///Carbage collection handle
+  addWindow.on('close', function(){
+  	addWindow = null;
+  });
+}
+function createEditPatWindow(){
+	//create new Window
+  addWindow = new BrowserWindow({
+  	width: 800,
+  	height: 500,
+  	title:'Modifier les données dun patient'
+  });
+  //load html into window
+  addWindow.loadURL(url.format({
+  	pathname: path.join(__dirname, 'editPatWindow.html'),
+  	protocol: 'file:',
+  	slashes: true
+  }));
+
+  ///Carbage collection handle
+  addWindow.on('close', function(){
+  	addWindow = null;
+  });
+
+}
+function createDeletePatWindow(){
+	//create new Window
+  addWindow = new BrowserWindow({
+  	width: 200,
+  	height: 300,
+  	title:'Supprimer un patient'
+  });
+  //load html into window
+  addWindow.loadURL(url.format({
+  	pathname: path.join(__dirname, 'deletePatWindow.html'),
+  	protocol: 'file:',
+  	slashes: true
+  }));
+
+  ///Carbage collection handle
+  addWindow.on('close', function(){
+  	addWindow = null;
+  });
+
+}
+function createDeleteRdvWindow(){
+	//create new Window
+  addWindow = new BrowserWindow({
+  	width: 200,
+  	height: 300,
+  	title:'Supprimer un randez-vous'
+  });
+  //load html into window
+  addWindow.loadURL(url.format({
+  	pathname: path.join(__dirname, 'deleteRdvWindow.html'),
   	protocol: 'file:',
   	slashes: true
   }));
@@ -95,11 +175,17 @@ const mainMenuTemplate = [
 		}      
 	},
 	{
-		label: 'Modifier'
+		label: 'Modifier',
+		click(){
+			createEditRdvWindow();
+		}  
 	},
 	{
-		label: 'Supprimer'
-	}
+		label: 'Supprimer',
+		click(){
+			createDeleteRdvWindow();
+		} 
+	},
 
 	]
 },
@@ -117,10 +203,19 @@ const mainMenuTemplate = [
 		}     
 	},
 	{
-		label: 'Modifier Données'
+		label: 'Modifier',
+		click(){
+			createEditPatWindow();
+		} 
 	},
 	{
-		label: 'Supprimer'
+		label: 'Randez-vous'      
+	},
+	{
+		label: 'Supprimer',
+		click(){
+			createDeletePatWindow();
+		} 
 	}
 
 	]
