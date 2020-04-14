@@ -1,12 +1,19 @@
-const electron = require('electron');
-const url = require('url');
-const path = require('path');
+const electron = require("electron");
+const path = require('path')
+const url = require ('url')
+const {getPatients,addPatient} = require('./controllers/patientController')
+const {getRdvs,addRDV,getRdvsByPatient,getCurrentDayRdvs} = require('./controllers/rdvController')
+
+const dialog = require('electron').dialog;
+const {Patient,RDV} = require('./config')
 
 const {app, BrowserWindow, Menu, ipcMain} = electron;
+const ipc = electron.ipcMain;
 
 let mainWindow;
 let addRdvWindow;
 let addPatWindow;
+app.allowRendererProcessReuse = false;
 
 // Listen for the app to be ready
 app.on('ready', function(){
@@ -14,7 +21,8 @@ app.on('ready', function(){
   mainWindow = new BrowserWindow({});
   //load html into window
   mainWindow.loadURL(url.format({
-  	pathname: path.join(__dirname, 'mainWindow.html'),
+	  pathname: path.join(__dirname, 'mainWindow.html'),
+	  preload: path.join(__dirname, 'preload.js'),
   	protocol: 'file:',
   	slashes: true
   }));
@@ -25,6 +33,13 @@ app.on('ready', function(){
   Menu.setApplicationMenu(mainMenu);
 
 });
+
+ipc.on('getPatients',getPatients)
+ipc.on('getRdvs',getRdvs)
+ipc.on('addPatient',addPatient)
+ipc.on('addRDV',addRDV)
+ipc.on('getRdvsByPatient',getRdvsByPatient)
+ipc.on('getCurrentDayRdvs',getCurrentDayRdvs)
 
 //Handle create add window
 
