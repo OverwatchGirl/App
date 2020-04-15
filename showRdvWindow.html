@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset='utf-8'>
+    	<title> Ajouter un patient </title>
+    	<script type="text/javascript" src="./contents/jquery/jquery-3.4.1.min.js"></script>
+    	<script src="./contents/bootstrap/js/bootstrap.min.js"></script>
+        <!-- Bootstrap CSS -->
+         <link rel="stylesheet" href="./contents/bootstrap//css/bootstrap.min.css" />
+          <link rel="stylesheet" href="./style.css" />
+
+        <style>
+
+            body {
+            background-image: url("./img/healthcare.jpg");
+            background-size: cover;
+            background-color: #cccccc;
+            }
+
+        </style>
+    </head>
+ <h1>     Lister les randez-vous d'un patient   </h1>
+    <body> 
+      <br>
+      <br>
+<form>
+ <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label>Veuillez entrer l'identifiant du patient : </label>
+      <input type="text" class="form-control" id="id_pat" placeholder="12345" required>
+    </div>
+  </div>
+  <button class="button" type="submit" id="toggleVisibilityButton">Afficher</button>
+  <div class="container"  style="display:none" id="displaytable">
+  <table class="table table-striped" id="table" >
+  <thead>
+    <tr>
+      <th scope="col">Identifiant</th>
+      <th scope="col">Nom </th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Adresse</th>
+      <th scope="col">N° Téléphone </th>
+      <th scope="col">Email</th>
+      <th scope="col">informations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>@mdo</td>
+    </tr>
+  </tbody>   
+       
+</table>
+  <button class="button" type="submit"  id="print">Imprimer</button>  
+</div>
+</form>
+
+      <script>
+
+           function checkEmptyInput()
+            {
+                var isEmpty = false,
+                idPat = document.getElementById('id_pat').value,
+
+
+               if(idPat === ""){
+                    alert("L'identifiant du patient ne peut pas etre vide");
+                    isEmpty = true;
+                }
+                return isEmpty;
+            }
+            //displays table on button click
+              document.getElementById("toggleVisibilityButton").addEventListener("click", function(button) {    
+                          if (document.getElementById("displaytable").style.display === "none")             
+                               document.getElementById("displaytable").style.display = "block";
+                          else document.getElementById("displaytable").style.display = "none";
+                         });
+
+        const deletePatient = (ev) =>{
+          ev.preventDefault(); // tostop the form submitting
+          if(!checkEmptyInput()){
+            
+                }
+          document.forms[0].reset();//to clear the doc for the next entries
+          //document.querySelector['form'].reset();
+
+        }
+      }
+
+      </script>
+
+    </body>
+
+</html>

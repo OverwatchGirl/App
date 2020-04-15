@@ -10,13 +10,11 @@
           <link rel="stylesheet" href="./style.css" />
 
         <style>
-body {
-  margin-top: 100px;
-  margin-bottom: 100px;
-  margin-right: 0px;
-  margin-left: 300px;
-   background-color : #cce6ff;
-}
+            body {
+            background-image: url("./img/healthcare.jpg");
+            background-size: cover;
+            background-color: #cccccc;
+            }
 
         </style>
     </head>
@@ -53,7 +51,7 @@ body {
 
 
                if(idPat === ""){
-                    alert("Le nom du patient ne peut pas etre vide");
+                    alert("L'identifiant du patient ne peut pas etre vide");
                     isEmpty = true;
                 }
                 return isEmpty;
@@ -70,7 +68,7 @@ body {
         }
       }
         document.getElementById("btn_patient").addEventListener('click', deletePatient);
-        document.getElementById("btn_patient").addEventListener('click',alert('Le patient a été supprimer de votre liste avec succés.'));
+        document.getElementById("btn_patient").addEventListener('click',alert('Le patient a été supprimé de votre liste avec succés.'));
       </script>
 
 

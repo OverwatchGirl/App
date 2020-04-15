@@ -27,5 +27,12 @@ h1 {
   background-color: #808080; /* Green */
   color: white;
 }
+.leg {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  margin-right: 0px;
+  margin-left: 300px;
+   background-color : #cce6ff;
+}
 
 /*#8ee7f4; #65d9f2 ; aecdd4 */

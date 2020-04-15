@@ -7,25 +7,44 @@
     	<script src="./contents/bootstrap/js/bootstrap.min.js"></script>
         <!-- Bootstrap CSS -->
          <link rel="stylesheet" href="./contents/bootstrap//css/bootstrap.min.css" />
+         <link rel="stylesheet" href="./style.css" />
+        <style>
+            body {
+            background-image: url("./img/healthcare.jpg");
+            background-size: cover;
+            background-color: #cccccc;
+            }
+        </style>
     </head>
+    <h1>     Ajouter un randez-vous   </h1>
     <body>
-      <h1>     Ajouter un randez-vous   </h1>
-      <form>
-          <div class="container">
-              <label>Code du patient</label>
-              <input type="text" id="code_pat_rdv" autofocus>
-               <label>Date</label>
-              <input type="date" id="date_rdv" autofocus>
-               <label>Heure</label>
-              <input type="time" id="time_rdv" autofocus>
-              <label>Objet</label>
-              <input type="text" id="objet_rdv" autofocus>
+<form>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label>Identifiant du patient</label>
+      <input type="text" class="form-control" id="id_rdv" placeholder="12345" required>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label>Date</label>
+      <input type="date" class="form-control" id="date_rdv" required>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Heure</label>
+      <input type="time" class="form-control" id="time_rdv" required>
+    </div>
+  </div>
+ <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label>Objet</ABBR></label>
+      <input type="textarea" class="form-control" id="objet_rdv" placeholder="Objet...">
+    </div>
+  </div>
+  <button class="button" type="submit" id="btn_Rdv">Ajouter</button>
 
-          </div>
-          <button type="submit">Ajouter</button>
-      </form>
       <script>
-        const electron = require('electron')
+       /* const electron = require('electron')
         const {ipcRenderer} = electron;
 
         const formRdv =document.querySelector('form');
@@ -35,7 +54,47 @@
           e.preventDefault();
           const Rdv = document.querySelector("#code_pat_rdv").value;
           ipcRenderer.send('Rdv:add', Rdv);
-        }
+        }*/
+            function checkEmptyInput()
+            {
+                var isEmpty = false,
+                codePatRdv = document.getElementById('code_pat_rdv').value,
+                dateRdv = document.getElementById('date_rdv').value,
+                timeRdv = document.getElementById('time_rdv').value,
+                objetRdv = document.getElementById('objet_rdv').value;
+            
+                if(codePatRdv === ""){
+                    alert("Le code du patient ne peut pas etre vide");
+                    isEmpty = true;
+                }
+                else if(dateRdv === ""){
+                    alert("La date du randez-vous ne peut pas etre vide");
+                    isEmpty = true;
+                }
+                else if(timeRdv === ""){
+                    alert("L'heure du randez-vous ne peut pas etre vide ");
+                    isEmpty = true;
+                }
+                return isEmpty;
+            }
+        let Rdvs =[]
+        const addPatient = (ev) =>{
+          ev.preventDefault(); // tostop the form submitting
+          if(!checkEmptyInput()){
+          let Rdv = {
+            idRdv: Data.now(),//current timestamp
+            codePatRdv: document.getElementById('code_pat_rdv').value,
+            dateRdv: document.getElementById('date_rdv').value,
+            timeRdv: document.getElementById('time_rdv').value,
+            objetRdv: document.getElementById('objet_rdv').value,
+          }
+
+          document.forms[0].reset();//to clear the doc for the next entries
+          //document.querySelector['form'].reset(); 
+       }
+     }
+        document.getElementById("btn_Rdv").addEventListener('click', addPatient);
+        document.getElementById("btn_Rdv").addEventListener('click',alert('Randez-vous ajouté. Id = ', Rdv.idRdv));
       </script>
 
     </body>
