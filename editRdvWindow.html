@@ -9,22 +9,24 @@
          <link rel="stylesheet" href="./contents/bootstrap//css/bootstrap.min.css" />
          <link rel="stylesheet" href="./style.css" />
         <style>
-body {
-  margin-top: 100px;
-  margin-bottom: 100px;
-  margin-right: 0px;
-  margin-left: 300px;
-   background-color : #cce6ff;
-}
         </style>
     </head>
-    <h1>     Ajouter un randez-vous   </h1>
     <body>
+<div class="login-box-rdv-edit">
+<img src="./img/edit_schedule.png" class="avatar">
+<h1>     Modifier un randez-vous   </h1>
 <form>
- <div class="form-row">
+  <div class="form-row">
     <div class="col-md-4 mb-3">
-      <label>Veuillez entrer l'identifiant du randez-vous : </label>
-      <input type="textarea" class="form-control" id="id_rdv" placeholder="12345" required>
+      <label>Code du randez-vous </label>
+        <div class="dropdown">
+          <select class="dropdown-select" type="textarea" id="id_rdv">
+               <option value="volvo">Volvo</option>
+               <option value="saab">Saab</option>
+               <option value="mercedes">Mercedes</option>
+               <option value="audi">Audi</option>
+          </select>
+        </div>
     </div>
   </div>
   <div class="form-row">
@@ -49,7 +51,9 @@ body {
       <input type="textarea" class="form-control" id="objet_rdv" placeholder="Objet...">
     </div>
   </div>
-  <button class="button" type="submit" id="btn_Rdv">Ajouter</button>
+</form>
+<button class="button" type="submit" id="btn_Rdv">Modifier</button>
+</div>
 
       <script>
        /* const electron = require('electron')
