@@ -4,24 +4,15 @@
   "description": "Plateforme de gestion de randez-vous",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "postinstall": "electron-builder install-app-deps",
-    "rebuild": "electron-rebuild -f -w sqlite3"
+    "start": "electron ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^4.4.1",
-    "electron": "3.0.16",
-    "electron-rebuild": "^1.10.1",
-    "express": "^4.17.1",
-    "jquery": "^3.5.0",
-    "knex": "^0.20.13",
-    "sequelize": "^5.21.6",
-    "sqlite3": "^4.0.6"
+    "electron": "^8.2.1",
+    "sqlite3": "^4.1.1"
   },
   "devDependencies": {
-    "electron": "^8.2.1",
-    "electron-builder": "^22.4.1"
+    "electron-rebuild": "^1.10.1"
   }
 }

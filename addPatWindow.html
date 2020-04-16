@@ -2,12 +2,16 @@
 <html>
     <head>
     	<meta charset='utf-8'>
-    	<title> Ajouter un randez-vous </title>
+    	<title> Ajouter un patient </title>
     	<script type="text/javascript" src="./contents/jquery/jquery-3.4.1.min.js"></script>
     	<script src="./contents/bootstrap/js/bootstrap.min.js"></script>
         <!-- Bootstrap CSS -->
-         <link rel="stylesheet" href="./contents/bootstrap/css/bootstrap.min.css" />
+         <link rel="stylesheet" href="./contents/bootstrap//css/bootstrap.min.css" />
+          <link rel="stylesheet" href="./style.css" />
+        <style>
+        </style>
     </head>
+<<<<<<< HEAD
     <body>
       <h1>     Ajouter un randez-vous   </h1>
       <form>
@@ -39,10 +43,111 @@
         //   const Pat = document.querySelector("#nom_pat").value;
         //   ipcRenderer.send('Pat:add', Pat);
         // }
+=======
+    <body> 
+ <div class="login-box-pat">
+      <img src="./img/3abd.png" class="avatar">
+      <h1>     Ajouter un patient   </h1>
+<form>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label>Prénom</label>
+      <input type="text" class="form-control" id="prenom_pat" placeholder="Prénom" required>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Nom</label>
+      <input type="text" class="form-control" id="nom_pat" placeholder="Nom"  required>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label>Adresse</label>
+      <input type="textarea" class="form-control" id="adresse_pat" placeholder="Adresse..." required>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label>Adresse mail</label>
+      <input type="text" class="form-control" id="mail_pat" placeholder="XYZ@mail.abc">
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Numéro de téléphone</label>
+      <input type="text" class="form-control" id="tel_pat" placeholder="0123456789">
+    </div>
+  </div>
+ <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label>Informations</label>
+      <input type="textarea" class="form-control" id="info_pat" placeholder="Informations..." >
+    </div>
+  </div>
+</form>
+<input class="button" type="submit" id="btn_patient">Ajouter</input>
+</div>
+
+      <script>
+        const electron = require('electron')
+        const {ipcRenderer} = electron;
+
+        const formPat =document.querySelector('form');
+        form.addEventListener('submit',submitForm);
+
+        function submitForm(e){
+          e.preventDefault();
+          const Pat = document.querySelector("#nom_pat").value;
+          ipcRenderer.send('Pat:add', Pat);
+        }
+           function checkEmptyInput()
+            {
+                var isEmpty = false,
+                nomPat = document.getElementById('nom_pat').value,
+                prenomPat = document.getElementById('prenom_pat').value,
+                adressePat = document.getElementById('adresse_pat').value,
+                telPat = document.getElementById('tel_pat').value;
+                mailPat = document.getElementById('mail_pat').value;
+                infoPat = document.getElementById('info_pat').value;
+            
+                if(nomPat === ""){
+                    alert("Le nom du patient ne peut pas etre vide");
+                    isEmpty = true;
+                }
+                else if(prenomPat === ""){
+                    alert("Le prénom du patient ne peut pas etre vide");
+                    isEmpty = true;
+                }
+                else if(adressePat === ""){
+                    alert("L'adresse du patient ne peut pas etre vide ");
+                    isEmpty = true;
+                }
+                return isEmpty;
+            }
+
+        const addPatient = (ev) =>{
+          ev.preventDefault(); // tostop the form submitting
+          if(!checkEmptyInput()){
+          let Patient = {
+                idPat: Data.now(),//current timestamp
+                nomPat : document.getElementById('nom_pat').value,
+                prenomPat : document.getElementById('prenom_pat').value,
+                adressePat : document.getElementById('adresse_pat').value,
+                telPat : document.getElementById('tel_pat').value;
+                mailPat : document.getElementById('mail_pat').value;
+                infoPat : document.getElementById('info_pat').value;
+            
+                }
+          document.forms[0].reset();//to clear the doc for the next entries
+          //document.querySelector['form'].reset();
+        }
+        }
+        document.getElementById("btn_patient").addEventListener('click', addPatient);
+        document.getElementById("btn_patient").addEventListener('click',alert('Patient Ajouté. Id = ', Patient.idPat));
+>>>>>>> 17d832e5decc19a929fa5da6b15daa4305c09ff9
+      </script>
+
+
       </script>
 
 
     </body>
-
 
 </html>

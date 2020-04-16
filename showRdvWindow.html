@@ -13,17 +13,17 @@
         </style>
     </head>
     <body> 
-
-<div class="login-box-delete">
-<img src="./img/edit_3abd.png" class="avatar">
-<h1>     Supprimer un patient   </h1>
+      <br>
       <br>
 <form>
+<div class="login-box-delete">
+<img src="./img/edit_3abd.png" class="avatar">
+<h1>     Liste des randz-vous   </h1>
+      <br>
   <div class="form-row">
     <div class="col-md-4 mb-3">
       <label>Identifiant </label>
       <br>
-
         <div class="dropdown">
           <select class="dropdown-select" type="textarea" id="id_pat" required>
                <option value="volvo">Volvo</option>
@@ -36,22 +36,62 @@
   </div>
   <br>
   <br>
-</form>
- <button class="button" type="submit" id="btn_patient">Supprimer</button>
+  <button class="button" type="submit" id="toggleVisibilityButton">Afficher</button>
  </div>
+  <div class="container"  style="display:none" id="displaytable">
+  <table class="table table-striped" id="table" >
+  <thead>
+    <tr>
+      <th scope="col">N°</th>
+      <th scope="col">Identifiant</th>
+      <th scope="col">Nom </th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Adresse</th>
+      <th scope="col">N° Tel.</th>
+      <th scope="col">Email</th>
+      <th scope="col">Informations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>@mdo</td>
+    </tr>
+  </tbody>   
+       
+</table>
+  <button class="button" type="submit"  id="print">Imprimer</button>  
+</div>
+</form>
 
       <script>
-        const electron = require('electron')
-        const {ipcRenderer} = electron;
 
-        const formPat =document.querySelector('form');
-        form.addEventListener('submit',submitForm);
-
-        function submitForm(e){
-          e.preventDefault();
-          const Pat = document.querySelector("#nom_pat").value;
-          ipcRenderer.send('Pat:add', Pat);
-        }
            function checkEmptyInput()
             {
                 var isEmpty = false,
@@ -64,6 +104,12 @@
                 }
                 return isEmpty;
             }
+            //displays table on button click
+              document.getElementById("toggleVisibilityButton").addEventListener("click", function(button) {    
+                          if (document.getElementById("displaytable").style.display === "none")             
+                               document.getElementById("displaytable").style.display = "block";
+                          else document.getElementById("displaytable").style.display = "none";
+                         });
 
         const deletePatient = (ev) =>{
           ev.preventDefault(); // tostop the form submitting
@@ -74,14 +120,9 @@
           //document.querySelector['form'].reset();
 
         }
-      
-        document.getElementById("btn_patient").addEventListener('click', deletePatient);
-        document.getElementById("btn_patient").addEventListener('click',alert('Le patient a été supprimé de votre liste avec succés.'));
-      </script>
-
+      }
 
       </script>
-
 
     </body>
 
