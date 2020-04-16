@@ -17,40 +17,23 @@
 
         </style>
     </head>
-    <body>
-     <h1> <center>     Mes randez-vous pour aujourd'hui  </center></h1>
+    <body id= "getCurrentDayRdvs">
+     <h1 > <center>     Mes randez-vous pour aujourd'hui  </center> </h1>
     <br>
     <br>
 
         <div class="container">
-        <table class="table table-striped">
+  <table class="table table-striped" id="tableRDV">
   <thead>
-    <tr>
+    <!-- <tr>
       <th scope="col">Identifiant du patient</th>
       <th scope="col">Code du randez-vous</th>
       <th scope="col">L'heure du randez-vous</th>
       <th scope="col">L'objet du randez-vous</th>
-    </tr>
+    </tr> -->
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
+   
   </tbody>
 </table>
 </div>
@@ -64,8 +47,11 @@
 
     </footer>
 
+    <script src="./renderer.js"></script>
+
     </body>
-    <script>
+
+    <!-- <script>
 
                 var rIndex,
                 table = document.getElementById("table");            
@@ -131,7 +117,7 @@
                 document.getElementById("lname").value = "";
                 document.getElementById("age").value = "";
             }
-    </script>
+    </script> -->
 
 
 

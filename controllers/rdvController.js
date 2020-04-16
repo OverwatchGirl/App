@@ -18,12 +18,17 @@ function getRdvs(event, arg) {
   }
 
   function getCurrentDayRdvs(event, arg) {
-    currentDate = Date.now()
-    RDV.findAll({where: {Date:currentDate}}).then(rdvs => {
-      
-      event.returnValue =rdvs;
-    }).catch((err)=>console.log(err))
-    
+    const startDate  = new Date()
+    const endDate  = new Date(startDate.getFullYear(),startDate.getMonth(),startDate.getDate(),25,59,0,1)
+  
+    RDV.findAll({
+      where: {
+        date: {[Op.between]: [startDate, endDate], }
+        },raw: true
+    }).then(rdvs => {
+         event.returnValue = rdvs
+    }).catch((err) => console.log(err))
+  
   }
 
   function addRDV(event, arg) {
@@ -33,7 +38,7 @@ function getRdvs(event, arg) {
     Patient.findOne({where: {id:patientId}}).then((patientFound)=>{
         if (patientFound) {
             RDV.create({
-                title: title,
+                Objet: objet,
                 Date: DateA,
                 patientId: patientId
             

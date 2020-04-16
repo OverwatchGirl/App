@@ -24,22 +24,18 @@ app.on('ready', function(){
 	  pathname: path.join(__dirname, 'mainWindow.html'),
 	  preload: path.join(__dirname, 'preload.js'),
   	protocol: 'file:',
-  	slashes: true
+	  slashes: true,
+	  webPreferences: {
+		nodeIntegration: true
+	  }
   }));
-
+  mainWindow.webContents.openDevTools();
   // Build menu from template
   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
   //insert menu
   Menu.setApplicationMenu(mainMenu);
 
 });
-
-ipc.on('getPatients',getPatients)
-ipc.on('getRdvs',getRdvs)
-ipc.on('addPatient',addPatient)
-ipc.on('addRDV',addRDV)
-ipc.on('getRdvsByPatient',getRdvsByPatient)
-ipc.on('getCurrentDayRdvs',getCurrentDayRdvs)
 
 //Handle create add window
 
@@ -60,6 +56,7 @@ function createAddRdvWindow(){
   addWindow.on('close', function(){
   	addWindow = null;
   });
+
 
 }
 function createAddPatWindow(){
@@ -161,18 +158,24 @@ function createDeleteRdvWindow(){
 
 }
 
-// catch Rdv:add
-ipcMain.on('Rdv:add', function(e, Rdv){
-	mainWindow.webConetnts.send('Rdv:add', Rdv);
-	addWindow.close();
+// // catch Rdv:add
+// ipcMain.on('Rdv:add', function(e, Rdv){
+// 	mainWindow.webConetnts.send('Rdv:add', Rdv);
+// 	addWindow.close();
 
-});
-// catch Pat:add
-ipcMain.on('Pat:add', function(e, pat){
-	mainWindow.webConetnts.send('Pat:add', Pat);
-	addWindow.close();
+// });
+// // catch Pat:add
+// ipcMain.on('Pat:add', function(e, pat){
+// 	mainWindow.webConetnts.send('Pat:add', Pat);
+// 	addWindow.close();
 
-});
+// });
+
+
+ipc.on('AddRdv',addRDV)
+ipc.on('getCurrentDayRdvs',getCurrentDayRdvs)
+ipc.on('AddPatient',addPatient)
+
 
 //create a meanu template
 const mainMenuTemplate = [

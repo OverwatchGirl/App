@@ -22,9 +22,9 @@
               <input type="text" id="objet_rdv" autofocus>
 
           </div>
-          <button type="submit">Ajouter</button>
+          <button type="submit" id="AddRdv">Ajouter</button>
       </form>
-      <script>
+      <!-- <script>
         const electron = require('electron')
         const {ipcRenderer} = electron;
 
@@ -36,6 +36,9 @@
           const Rdv = document.querySelector("#code_pat_rdv").value;
           ipcRenderer.send('Rdv:add', Rdv);
         }
+      </script> -->
+      <script src="./addRdvRenderer.js">
+            
       </script>
 
     </body>
