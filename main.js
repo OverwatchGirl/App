@@ -163,6 +163,56 @@ function createDisplayRdvWindow(){
   	protocol: 'file:',
   	slashes: true
   }));
+<<<<<<< HEAD
+=======
+
+  ///Carbage collection handle
+  addWindow.on('close', function(){
+  	addWindow = null;
+  });
+
+}
+function createDisplayPatWindow(){
+	//create new Window
+  addWindow = new BrowserWindow({
+  	width: 800,
+  	height: 500,
+  	title:'Afficher la liste des patients'
+  });
+  //load html into window
+  addWindow.loadURL(url.format({
+  	pathname: path.join(__dirname, 'displayPatWindow.html'),
+  	protocol: 'file:',
+  	slashes: true
+  }));
+
+  ///Carbage collection handle
+  addWindow.on('close', function(){
+  	addWindow = null;
+  });
+
+}
+function createShowRdvWindow(){
+	//create new Window
+  addWindow = new BrowserWindow({
+  	width: 800,
+  	height: 500,
+  	title:'Afficher les randez-vous d"un patient'
+  });
+  //load html into window
+  addWindow.loadURL(url.format({
+  	pathname: path.join(__dirname, 'showRdvWindow.html'),
+  	protocol: 'file:',
+  	slashes: true
+  }));
+
+  ///Carbage collection handle
+  addWindow.on('close', function(){
+  	addWindow = null;
+  });
+
+}
+>>>>>>> origin/master
 
   ///Carbage collection handle
   addWindow.on('close', function(){
