@@ -16,7 +16,6 @@
 <div class="login-box">
       <img src="./img/schedule.png" class="avatar">
       <h1>     Ajouter un randez-vous   </h1>
-<<<<<<< HEAD
       <form>
           <div class="container">
               <label>Code du patient</label>
@@ -33,7 +32,6 @@
       </form>
       <!-- <script>
         const electron = require('electron')
-=======
 <form>
   <div class="form-row">
     <div class="col-md-4 mb-3">
@@ -63,7 +61,6 @@
 
       <script>
        /* const electron = require('electron')
->>>>>>> 17d832e5decc19a929fa5da6b15daa4305c09ff9
         const {ipcRenderer} = electron;
 
         const formRdv =document.querySelector('form');
@@ -73,54 +70,10 @@
           e.preventDefault();
           const Rdv = document.querySelector("#code_pat_rdv").value;
           ipcRenderer.send('Rdv:add', Rdv);
-<<<<<<< HEAD
         }
       </script> -->
       <script src="./addRdvRenderer.js">
             
-=======
-        }*/
-            function checkEmptyInput()
-            {
-                var isEmpty = false,
-                codePatRdv = document.getElementById('code_pat_rdv').value,
-                dateRdv = document.getElementById('date_rdv').value,
-                timeRdv = document.getElementById('time_rdv').value,
-                objetRdv = document.getElementById('objet_rdv').value;
-            
-                if(codePatRdv === ""){
-                    alert("Le code du patient ne peut pas etre vide");
-                    isEmpty = true;
-                }
-                else if(dateRdv === ""){
-                    alert("La date du randez-vous ne peut pas etre vide");
-                    isEmpty = true;
-                }
-                else if(timeRdv === ""){
-                    alert("L'heure du randez-vous ne peut pas etre vide ");
-                    isEmpty = true;
-                }
-                return isEmpty;
-            }
-        let Rdvs =[]
-        const addPatient = (ev) =>{
-          ev.preventDefault(); // tostop the form submitting
-          if(!checkEmptyInput()){
-          let Rdv = {
-            idRdv: Data.now(),//current timestamp
-            codePatRdv: document.getElementById('code_pat_rdv').value,
-            dateRdv: document.getElementById('date_rdv').value,
-            timeRdv: document.getElementById('time_rdv').value,
-            objetRdv: document.getElementById('objet_rdv').value,
-          }
-
-          document.forms[0].reset();//to clear the doc for the next entries
-          //document.querySelector['form'].reset(); 
-       }
-     }
-        document.getElementById("btn_Rdv").addEventListener('click', addPatient);
-        document.getElementById("btn_Rdv").addEventListener('click',alert('Randez-vous ajouté. Id = ', Rdv.idRdv));
->>>>>>> 17d832e5decc19a929fa5da6b15daa4305c09ff9
       </script>
 
     </body>
