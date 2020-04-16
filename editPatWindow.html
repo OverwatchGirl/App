@@ -10,23 +10,24 @@
           <link rel="stylesheet" href="./style.css" />
 
         <style>
-            body {
-            background-image: url("./img/healthcare.jpg");
-            background-size: cover;
-            background-color: #cccccc;
-            }
-
         </style>
     </head>
- <h1>     Modifier les données d'un patient   </h1>
-    <body> 
-      <br>
-      <br>
+<body> 
+<div class="login-box-pat-edit">
+<img src="./img/edit_3abd.png" class="avatar">
+<h1>     Modifier les données d'un patient   </h1>
 <form>
- <div class="form-row">
+  <div class="form-row">
     <div class="col-md-4 mb-3">
-      <label>Veuillez entrer l'identifiant du patient : </label>
-      <input type="textarea" class="form-control" id="id_pat" placeholder="12345" >
+      <label>Identifiant du patient </label>
+        <div class="dropdown">
+          <select class="dropdown-select" type="textarea" id="id_pat">
+               <option value="volvo">Volvo</option>
+               <option value="saab">Saab</option>
+               <option value="mercedes">Mercedes</option>
+               <option value="audi">Audi</option>
+          </select>
+        </div>
     </div>
   </div>
   <div class="form-row">
@@ -57,12 +58,13 @@
   </div>
  <div class="form-row">
     <div class="col-md-4 mb-3">
-      <label>Informations</ABBR></label>
+      <label>Informationss</label>
       <input type="textarea" class="form-control" id="info_pat" placeholder="Informations..." >
     </div>
   </div>
-  <button class="button" type="submit" id="btn_patient">Modifier</button>
 </form>
+<button class="button" type="submit" id="btn_patient">Modifier</button>
+</div>
 
       <script>
         const electron = require('electron')
@@ -155,11 +157,6 @@
         document.getElementById("btn_patient").addEventListener('click', addPatient);
         document.getElementById("btn_patient").addEventListener('click',alert('Les données de ce patient ont été modifiées avec succés.'));
       </script>
-
-
-      </script>
-
-
     </body>
 
 </html>

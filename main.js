@@ -109,8 +109,8 @@ function createEditPatWindow(){
 function createDeletePatWindow(){
 	//create new Window
   addWindow = new BrowserWindow({
-  	width: 200,
-  	height: 300,
+  	width: 800,
+  	height: 500,
   	title:'Supprimer un patient'
   });
   //load html into window
@@ -129,8 +129,8 @@ function createDeletePatWindow(){
 function createDeleteRdvWindow(){
 	//create new Window
   addWindow = new BrowserWindow({
-  	width: 200,
-  	height: 300,
+  	width: 800,
+  	height: 500,
   	title:'Supprimer un randez-vous'
   });
   //load html into window
@@ -149,8 +149,8 @@ function createDeleteRdvWindow(){
 function createDisplayRdvWindow(){
 	//create new Window
   addWindow = new BrowserWindow({
-  	width: 200,
-  	height: 300,
+  	width: 800,
+  	height: 500,
   	title:'Afficher la liste des randez-vous'
   });
   //load html into window
@@ -169,8 +169,8 @@ function createDisplayRdvWindow(){
 function createDisplayPatWindow(){
 	//create new Window
   addWindow = new BrowserWindow({
-  	width: 200,
-  	height: 300,
+  	width: 800,
+  	height: 500,
   	title:'Afficher la liste des patients'
   });
   //load html into window
@@ -189,8 +189,8 @@ function createDisplayPatWindow(){
 function createShowRdvWindow(){
 	//create new Window
   addWindow = new BrowserWindow({
-  	width: 200,
-  	height: 300,
+  	width: 800,
+  	height: 500,
   	title:'Afficher les randez-vous d"un patient'
   });
   //load html into window

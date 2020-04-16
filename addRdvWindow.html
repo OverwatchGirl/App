@@ -9,15 +9,13 @@
          <link rel="stylesheet" href="./contents/bootstrap//css/bootstrap.min.css" />
          <link rel="stylesheet" href="./style.css" />
         <style>
-            body {
-            background-image: url("./img/healthcare.jpg");
-            background-size: cover;
-            background-color: #cccccc;
-            }
         </style>
     </head>
-    <h1>     Ajouter un randez-vous   </h1>
+
     <body>
+<div class="login-box">
+      <img src="./img/schedule.png" class="avatar">
+      <h1>     Ajouter un randez-vous   </h1>
 <form>
   <div class="form-row">
     <div class="col-md-4 mb-3">
@@ -37,11 +35,13 @@
   </div>
  <div class="form-row">
     <div class="col-md-4 mb-3">
-      <label>Objet</ABBR></label>
+      <label>Objet</label>
       <input type="textarea" class="form-control" id="objet_rdv" placeholder="Objet...">
     </div>
   </div>
-  <button class="button" type="submit" id="btn_Rdv">Ajouter</button>
+</form>
+  <input class="button" type="submit" id="btn_Rdv">Ajouter</input>
+</div>
 
       <script>
        /* const electron = require('electron')

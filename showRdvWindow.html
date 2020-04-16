@@ -10,38 +10,46 @@
           <link rel="stylesheet" href="./style.css" />
 
         <style>
-
-            body {
-            background-image: url("./img/healthcare.jpg");
-            background-size: cover;
-            background-color: #cccccc;
-            }
-
         </style>
     </head>
- <h1>     Lister les randez-vous d'un patient   </h1>
     <body> 
       <br>
       <br>
 <form>
- <div class="form-row">
+<div class="login-box-delete">
+<img src="./img/edit_3abd.png" class="avatar">
+<h1>     Liste des randz-vous   </h1>
+      <br>
+  <div class="form-row">
     <div class="col-md-4 mb-3">
-      <label>Veuillez entrer l'identifiant du patient : </label>
-      <input type="text" class="form-control" id="id_pat" placeholder="12345" required>
+      <label>Identifiant </label>
+      <br>
+        <div class="dropdown">
+          <select class="dropdown-select" type="textarea" id="id_pat" required>
+               <option value="volvo">Volvo</option>
+               <option value="saab">Saab</option>
+               <option value="mercedes">Mercedes</option>
+               <option value="audi">Audi</option>
+          </select>
+        </div>
     </div>
   </div>
+  <br>
+  <br>
   <button class="button" type="submit" id="toggleVisibilityButton">Afficher</button>
+ </div>
   <div class="container"  style="display:none" id="displaytable">
   <table class="table table-striped" id="table" >
   <thead>
     <tr>
+      <th scope="col">N°</th>
       <th scope="col">Identifiant</th>
       <th scope="col">Nom </th>
       <th scope="col">Prénom</th>
       <th scope="col">Adresse</th>
-      <th scope="col">N° Téléphone </th>
+      <th scope="col">N° Tel.</th>
       <th scope="col">Email</th>
-      <th scope="col">informations</th>
+      <th scope="col">Informations</th>
     </tr>
   </thead>
   <tbody>

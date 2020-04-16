@@ -9,23 +9,37 @@
          <link rel="stylesheet" href="./contents/bootstrap//css/bootstrap.min.css" />
          <link rel="stylesheet" href="./style.css" />
         <style>
-            body {
-            background-image: url("./img/healthcare.jpg");
-            background-size: cover;
-            background-color: #cccccc;
-            }
         </style>
     </head>
-    <h1>     Supprimer un randez-vous   </h1>
     <body>
+
+<div class="login-box-delete">
+<img src="./img/edit_3abd.png" class="avatar">
+<h1>     Supprimer un randez-vous   </h1>
+      <br>
 <form>
- <div class="form-row">
+  <div class="form-row">
     <div class="col-md-4 mb-3">
-      <label>Veuillez entrer l'identifiant du randez-vous : </label>
-      <input type="textarea" class="form-control" id="id_rdv" placeholder="12345" required>
+      <label>Code </label>
+      <br>
+
+        <div class="dropdown">
+          <select class="dropdown-select" type="textarea" id="id_rdv" required="">
+               <option value="volvo">Volvo</option>
+               <option value="saab">Saab</option>
+               <option value="mercedes">Mercedes</option>
+               <option value="audi">Audi</option>
+          </select>
+        </div>
     </div>
   </div>
-  <button class="button" type="submit" id="btn_Rdv">Supprimer</button>
+  <br>
+  <br>
+</form>
+ <button class="button" type="submit" id="btn_Rdv">Supprimer</button>
+ </div>
+
+
 
       <script>
        /* const electron = require('electron')

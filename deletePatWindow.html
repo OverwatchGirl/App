@@ -10,27 +10,35 @@
           <link rel="stylesheet" href="./style.css" />
 
         <style>
-            body {
-            background-image: url("./img/healthcare.jpg");
-            background-size: cover;
-            background-color: #cccccc;
-            }
-
         </style>
     </head>
- <h1>     Supprimer un patient   </h1>
     <body> 
-      <br>
+
+<div class="login-box-delete">
+<img src="./img/edit_3abd.png" class="avatar">
+<h1>     Supprimer un patient   </h1>
       <br>
 <form>
- <div class="form-row">
+  <div class="form-row">
     <div class="col-md-4 mb-3">
-      <label>Veuillez entrer l'identifiant du patient : </label>
-      <input type="text" class="form-control" id="id_pat" placeholder="12345" required>
+      <label>Identifiant </label>
+      <br>
+
+        <div class="dropdown">
+          <select class="dropdown-select" type="textarea" id="id_pat" required>
+               <option value="volvo">Volvo</option>
+               <option value="saab">Saab</option>
+               <option value="mercedes">Mercedes</option>
+               <option value="audi">Audi</option>
+          </select>
+        </div>
     </div>
   </div>
-  <button class="button" type="submit" id="btn_patient">Supprimer</button>
+  <br>
+  <br>
 </form>
+ <button class="button" type="submit" id="btn_patient">Supprimer</button>
+ </div>
 
       <script>
         const electron = require('electron')
