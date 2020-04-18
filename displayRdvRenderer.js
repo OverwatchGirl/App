@@ -1,9 +1,10 @@
 const ipc = require('electron').ipcRenderer;
+const {Patient,RDV} = require('./config')
 
-function loadCurrentDayRdvs(){
-    const currentDayRdvs = ipc.sendSync('getCurrentDayRdvs')
-    const CurrentDayRdvsItems = currentDayRdvs.reduce((html,r)=>{
-        table = document.getElementById("tableCurrentDay") ;
+function loadRdvs(){
+    const rdvs = ipc.sendSync('getRdvs')
+    const rdvsItems = rdvs.reduce((html,r)=>{
+        table = document.getElementById("tablerdv") ;
         html +=`
              ${addHtmlTableRow(table , r)}
                      
@@ -11,13 +12,13 @@ function loadCurrentDayRdvs(){
          return html
     }, '');
 
-    const currentRdvList = document.getElementById('CurrentDayList');
-    currentRdvList.innerHTML = CurrentDayRdvsItems;
+    const rdvList = document.getElementById('rdvList');
+    rdvList.innerHTML = rdvsItems;
 
 }
 
 document.addEventListener("DOMContentLoaded", function(){
-    loadCurrentDayRdvs();
+    loadRdvs();
   //  ipc.on('updatedPatients',loadPatients)
 });
 
@@ -43,4 +44,4 @@ cell5.innerHTML = RDV.Objet;
 }
 
 
-module.exports = {loadCurrentDayRdvs}
+module.exports = { loadRdvs}

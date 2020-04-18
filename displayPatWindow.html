@@ -12,63 +12,35 @@
 
         </style>
     </head>
-    <body>
-     <h1> <center>     Liste des patients  </center></h1>
-    <br>
-    <br>
+  <body >
 
-        <div class="container">
-        <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">N°</th>
-      <th scope="col">ID</th>
-      <th scope="col">Nom </th>
-      <th scope="col">Prénom</th>
-      <th scope="col">Adresse</th>
-      <th scope="col">N° Tel. </th>
-      <th scope="col">Email</th>
-      <th scope="col">Informations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-    </tr>
-  </tbody>
+  <div>
+      
+        <h1> <center>     Liste des patients  </center></h1>
+          <br>
+          <br>
+
+        
+        <div class="container"  id="patientsList"> </div>
+        <table class="table table-striped" id="tablepat" border="1"> 
+              <tr>
+                      <th scope="col">Nom </th>
+                      <th scope="col">Prénom</th>
+                      <th scope="col">Date de Naissance</th>
+                      <th scope="col">N° Téléphone </th>
+                      <th scope="col">Adresse Mail</th>
+                      <th scope="col">Informations</th> 
+
+              </tr>
             
-</table>
-</div>
-    </body>
-    <script>
-</script>
+        </table>
+  </div>
+  <script>window.$ = window.jQuery = require('jquery');</script>
+
+  <script src="./displayPatRenderer.js">
+  </script>
+  </body>
+    
 
 
 

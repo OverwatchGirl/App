@@ -18,60 +18,21 @@
       <h1>     Ajouter un randez-vous   </h1>
       <form>
           <div class="container">
-              <label>Code du patient</label>
-              <input type="text" id="code_pat_rdv" autofocus>
+              <label>Nom du Patient</label>
+              <input type="text" id="nom_pat_rdv" autofocus required>
+              <label>Prénom du Patient</label>
+              <input type="text" id="pre_pat_rdv" autofocus required>
                <label>Date</label>
-              <input type="date" id="date_rdv" autofocus>
+              <input type="date" id="date_rdv" autofocus required>
                <label>Heure</label>
-              <input type="time" id="time_rdv" autofocus>
+              <input type="time" id="time_rdv" autofocus required>
               <label>Objet</label>
               <input type="text" id="objet_rdv" autofocus>
 
           </div>
-          <button type="submit" id="AddRdv">Ajouter</button>
+          <button type="submit" id="AddRDV"> Ajouter </button>
       </form>
-      <!-- <script>
-        const electron = require('electron')
-<form>
-  <div class="form-row">
-    <div class="col-md-4 mb-3">
-      <label>Identifiant du patient</label>
-      <input type="text" class="form-control" id="id_rdv" placeholder="12345" required>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md-4 mb-3">
-      <label>Date</label>
-      <input type="date" class="form-control" id="date_rdv" required>
-    </div>
-    <div class="col-md-4 mb-3">
-      <label>Heure</label>
-      <input type="time" class="form-control" id="time_rdv" required>
-    </div>
-  </div>
- <div class="form-row">
-    <div class="col-md-4 mb-3">
-      <label>Objet</label>
-      <input type="textarea" class="form-control" id="objet_rdv" placeholder="Objet...">
-    </div>
-  </div>
-</form>
-  <input class="button" type="submit" id="btn_Rdv">Ajouter</input>
-</div>
-
-      <script>
-       /* const electron = require('electron')
-        const {ipcRenderer} = electron;
-
-        const formRdv =document.querySelector('form');
-        form.addEventListener('submit',submitForm);
-
-        function submitForm(e){
-          e.preventDefault();
-          const Rdv = document.querySelector("#code_pat_rdv").value;
-          ipcRenderer.send('Rdv:add', Rdv);
-        }
-      </script> -->
+     
       <script src="./addRdvRenderer.js">
             
       </script>

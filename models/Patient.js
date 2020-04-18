@@ -16,6 +16,9 @@ module.exports = (db, DataTypes) => {
         InfoMed: {
             type: DataTypes.STRING
         },
+        AdresseMail: {
+            type: DataTypes.STRING
+        },
         Telephone: {
             type: DataTypes.STRING
         },

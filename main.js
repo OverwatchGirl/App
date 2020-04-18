@@ -2,12 +2,20 @@
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
+const {getPatients,addPatient} = require('./controllers/patientController')
+const {getRdvs,addRDV,getRdvsByPatient,getCurrentDayRdvs} = require('./controllers/rdvController')
+
+const dialog = require('electron').dialog;
+const {Patient,RDV} = require('./config')
+
 
 const {app, BrowserWindow, Menu, ipcMain} = electron;
+const ipc = electron.ipcMain;
 
 let mainWindow;
 let addRdvWindow;
 let addPatWindow;
+app.allowRendererProcessReuse = false;
 
 // Listen for the app to be ready
 app.on('ready', function(){
@@ -15,7 +23,9 @@ app.on('ready', function(){
   mainWindow = new BrowserWindow({});
   //load html into window
   mainWindow.loadURL(url.format({
-  	pathname: path.join(__dirname, 'mainWindow.html'),
+	  pathname: path.join(__dirname, 'mainWindow.html'),
+	  preload: path.join(__dirname, 'preload.js'),
+
   	protocol: 'file:',
 	  slashes: true,
 	  webPreferences: {
@@ -27,7 +37,7 @@ app.on('ready', function(){
   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
   //insert menu
   Menu.setApplicationMenu(mainMenu);
-
+  mainWindow.webContents.openDevTools();
 });
 
 //Handle create add window
@@ -49,6 +59,7 @@ function createAddRdvWindow(){
   addWindow.on('close', function(){
   	addWindow = null;
   });
+  addWindow.webContents.openDevTools();
 
 
 }
@@ -188,6 +199,7 @@ function createDisplayPatWindow(){
   addWindow.on('close', function(){
   	addWindow = null;
   });
+  addWindow.webContents.openDevTools();
 
 }
 function createShowRdvWindow(){
@@ -225,10 +237,68 @@ function createShowRdvWindow(){
 // });
 
 
-ipc.on('AddRdv',addRDV)
-ipc.on('getCurrentDayRdvs',getCurrentDayRdvs)
-ipc.on('AddPatient',addPatient)
+ipc.on('getPatients',getPatients)
+ipc.on('getRdvs',getRdvs)
+ipc.on('AddPatient',(event,arg) => {
+		nom = arg ['nom'];
+		prenom = arg ['prenom'];
+		date = arg ['date'];
+		email = arg ['email'];
+		tel = arg ['tel'];
+		info = arg ['info'];
+	Patient.create({
+		Nom: nom,
+		Prenom: prenom,
+		DateOfBirth: date,
+		InfoMed: info,
+		Telephone: tel,
+		AdresseMail : email
+	  }).then(patient => {
+		event.returnValue = patient;
+	  });
+})
 
+ipc.on('addRDV', (event,arg) => {
+
+	nomPat = arg ['nom_pat'];
+	prePat = arg ['pre_pat'];
+	date = arg ['date'];
+	heure = arg ['heure'];
+	objet = arg ['objet'];
+
+	date.split(' ')[1]= heure;
+	
+	Patient.findOne({where: {Nom:nomPat ,Prenom :prePat}}).then((patientFound)=>{
+        if (patientFound) {
+            RDV.create({
+                Objet: objet,
+                Date: date, 
+                patientId: patientFound.id
+              }).then(rdv => {
+                event.returnValue = rdv;
+              });
+        }
+        else event.returnValue = 'error'
+
+	});
+
+})
+ipc.on('getRdvsByPatient',(event,arg) => {
+
+
+  RDV.findAll({where: {patientId:arg['id']}, raw : true,
+        include: [{
+          model: Patient
+        }]}).then(rdvs => {
+      
+      event.returnValue =rdvs;
+	}).catch((err)=>console.log(err))
+	
+
+
+})
+
+ipc.on('getCurrentDayRdvs',getCurrentDayRdvs)
 
 //create a meanu template
 const mainMenuTemplate = [

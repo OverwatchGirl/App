@@ -1,25 +1,23 @@
 const { Patient } = require('../config')
 
-function getPatients(event, arg) {
-  Patient.findAll().then(patiens => {
 
-    event.returnValue = patiens;
+
+function getPatients(event, arg) {
+  Patient.findAll({raw : true}).then(patients => {
+
+    event.returnValue = patients;
   }).catch((err) => console.log(err))
 
 }
 
 function addPatient(event, arg) {
-  Nom = "adel"
-  Prenom = "namani"
-  DateOfBirth = Date.now()
-  InfoMed = "glefj"
-  Telephone = "094823"
+  
   Patient.create({
-    Nom: Nom,
-    Prenom: Prenom,
-    DateOfBirth: DateOfBirth,
-    InfoMed: InfoMed,
-    Telephone: Telephone
+    Nom: arg[0],
+    Prenom: [1],
+    DateOfBirth: arg[2],
+    InfoMed: arg[3],
+    Telephone: arg[4]
   }).then(patient => {
     event.returnValue = patient;
   });

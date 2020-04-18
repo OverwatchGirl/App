@@ -17,113 +17,37 @@
       <br>
 <form>
 <div class="login-box-delete">
-<img src="./img/edit_3abd.png" class="avatar">
 <h1>     Liste des randz-vous   </h1>
       <br>
   <div class="form-row">
     <div class="col-md-4 mb-3">
-      <label>Identifiant </label>
-      <br>
-        <div class="dropdown">
-          <select class="dropdown-select" type="textarea" id="id_pat" required>
-               <option value="volvo">Volvo</option>
-               <option value="saab">Saab</option>
-               <option value="mercedes">Mercedes</option>
-               <option value="audi">Audi</option>
-          </select>
-        </div>
+      <label>Nom</label>
+      <input type="text" class="form-control" id="nom_pat" placeholder="Nom"  required>
     </div>
+    <div class="col-md-4 mb-3">
+      <label>Prénom</label>
+      <input type="text" class="form-control" id="pre_pat" placeholder="Prénom" required>
+    </div> 
   </div>
   <br>
   <br>
-  <button class="button" type="submit" id="toggleVisibilityButton">Afficher</button>
+  <button class="button" type="submit" id="afficherRDV">Afficher</button>
  </div>
-  <div class="container"  style="display:none" id="displaytable">
-  <table class="table table-striped" id="table" >
+</form>
+<div class="container" id="rdvList">
+  <table class="table table-striped" id="table" border="1" >
   <thead>
     <tr>
-      <th scope="col">N°</th>
-      <th scope="col">Identifiant</th>
-      <th scope="col">Nom </th>
-      <th scope="col">Prénom</th>
-      <th scope="col">Adresse</th>
-      <th scope="col">N° Tel.</th>
-      <th scope="col">Email</th>
-      <th scope="col">Informations</th>
+      <th scope="col">Nom du patient</th>
+      <th scope="col">Prenom du patient</th>
+      <th scope="col">Date</th>
+      <th scope="col">Heure</th>
+      <th scope="col">Objet</th>
     </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-    </tr>
-  </tbody>   
-       
+  </thead>       
 </table>
-  <button class="button" type="submit"  id="print">Imprimer</button>  
 </div>
-</form>
-
-      <script>
-
-           function checkEmptyInput()
-            {
-                var isEmpty = false,
-                idPat = document.getElementById('id_pat').value,
-
-
-               if(idPat === ""){
-                    alert("L'identifiant du patient ne peut pas etre vide");
-                    isEmpty = true;
-                }
-                return isEmpty;
-            }
-            //displays table on button click
-              document.getElementById("toggleVisibilityButton").addEventListener("click", function(button) {    
-                          if (document.getElementById("displaytable").style.display === "none")             
-                               document.getElementById("displaytable").style.display = "block";
-                          else document.getElementById("displaytable").style.display = "none";
-                         });
-
-        const deletePatient = (ev) =>{
-          ev.preventDefault(); // tostop the form submitting
-          if(!checkEmptyInput()){
-            
-                }
-          document.forms[0].reset();//to clear the doc for the next entries
-          //document.querySelector['form'].reset();
-
-        }
-      }
-
-      </script>
-
+<script src="./showRdvWindow.js"></script>
     </body>
 
 </html>
