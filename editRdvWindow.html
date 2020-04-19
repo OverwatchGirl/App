@@ -2,7 +2,7 @@
 <html>
     <head>
     	<meta charset='utf-8'>
-    	<title> Ajouter un randez-vous </title>
+    	<title> Modifier un rendez-vous </title>
     	<script type="text/javascript" src="./contents/jquery/jquery-3.4.1.min.js"></script>
     	<script src="./contents/bootstrap/js/bootstrap.min.js"></script>
         <!-- Bootstrap CSS -->
@@ -16,26 +16,7 @@
 <img src="./img/edit_schedule.png" class="avatar">
 <h1>     Modifier un randez-vous   </h1>
 <form>
-  <div class="form-row">
-    <div class="col-md-4 mb-3">
-      <label>Code du randez-vous </label>
-        <div class="dropdown">
-          <select class="dropdown-select" type="textarea" id="id_rdv">
-               <option value="volvo">Volvo</option>
-               <option value="saab">Saab</option>
-               <option value="mercedes">Mercedes</option>
-               <option value="audi">Audi</option>
-          </select>
-        </div>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md-4 mb-3">
-      <label>Identifiant du patient</label>
-      <input type="text" class="form-control" id="id_pat_rdv" placeholder="12345">
-    </div>
-  </div>
-  <div class="form-row">
+    <div class="form-row">
     <div class="col-md-4 mb-3">
       <label>Date</label>
       <input type="date" class="form-control" id="date_rdv">
@@ -52,21 +33,10 @@
     </div>
   </div>
 </form>
-<button class="button" type="submit" id="btn_Rdv">Modifier</button>
+<button class="button" type="submit" id="edit_rdv">Modifier</button>
 </div>
 
-      <script>
-       /* const electron = require('electron')
-        const {ipcRenderer} = electron;
-
-        const formRdv =document.querySelector('form');
-        form.addEventListener('submit',submitForm);
-
-        function submitForm(e){
-          e.preventDefault();
-          const Rdv = document.querySelector("#code_pat_rdv").value;
-          ipcRenderer.send('Rdv:add', Rdv);
-        }*/
+      <!-- <script>
             function checkEmptyInput()
             {
                 var isEmpty = false,
@@ -127,8 +97,8 @@
         }
         document.getElementById("btn_Rdv").addEventListener('click', addRdv);
         document.getElementById("btn_Rdv").addEventListener('click',alert('Randez-vous modifié'));
-      </script>
-
+      </script> -->
+      <script src="./editRdvWindow.js"></script>
     </body>
 
 

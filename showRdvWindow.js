@@ -1,22 +1,8 @@
 const ipc = require('electron').ipcRenderer;
-
-const afficherRDV = document.getElementById('afficherRDV');
-var nom_patient = document.getElementById('nom_pat');
-var pre_patient = document.getElementById('pre_pat');
-
-
+const { Patient } = require('../config')
 
 function loadRdvsByPatient(){
-  
-	var patient = Patient.findOne({raw : true, where: {Nom:nom_patient.value, Prenom:pre_patient.value}}).then(patient => {
-
-		event.returnValue = patient;
-	  }).catch((err) => console.log(err))
-  var data =  {
-    'id' : patient.id , 
-  }
-
-  const rdvs = ipc.sendSync('getRdvsByPatient', data);
+  const rdvs = ipc.sendSync('getRdvsByPatient');
   const rdvsItems = rdvs.reduce((html,r)=>{
       table = document.getElementById("table") ;
       html +=`
@@ -25,13 +11,10 @@ function loadRdvsByPatient(){
       `
        return html
   }, '');
-
   const rdvList = document.getElementById('rdvList');
   rdvList.innerHTML = rdvsItems;
-
 }
-
-afficherRDV.addEventListener("click", function(){
+document.addEventListener("DOMContentLoaded", function(){
   loadRdvsByPatient();
 //  ipc.on('updatedPatients',loadPatients)
 });

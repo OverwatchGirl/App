@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset='utf-8'>
+    	<title> Afficher les rendez-vous d'un jour donné </title>
+    	<script type="text/javascript" src="./contents/jquery/jquery-3.4.1.min.js"></script>
+    	<script src="./contents/bootstrap/js/bootstrap.min.js"></script>
+        <!-- Bootstrap CSS -->
+         <link rel="stylesheet" href="./contents/bootstrap//css/bootstrap.min.css" />
+         <link rel="stylesheet" href="./style.css" />
+        <style>
+        </style>
+    </head>
+    <body>
+
+<div class="login-box-delete">
+<img src="./img/edit_3abd.png" class="avatar">
+<h1>     Choisissez la date   </h1>
+      <br>
+<form>
+  <div class="form-row">
+    <input type="date" id="date_spec" autofocus required>
+      <br>
+  </div>
+</form>
+ <button class="button" type="submit" id="btn_afficher">Afficher</button>
+ 
+ </div>
+<script src="./showRdvSpec.js"></script>
+<!-- 
+
+      <script>
+       /* const electron = require('electron')
+        const {ipcRenderer} = electron;
+
+        const formRdv =document.querySelector('form');
+        form.addEventListener('submit',submitForm);
+
+        function submitForm(e){
+          e.preventDefault();
+          const Rdv = document.querySelector("#code_pat_rdv").value;
+          ipcRenderer.send('Rdv:add', Rdv);
+        }*/
+            function checkEmptyInput()
+            {
+                var isEmpty = false,
+                idRdv = document.getElementById('id_rdv').value,
+                
+                if(idRdv === ""){
+                    alert("Le code du patient ne peut pas etre vide");
+                    isEmpty = true;
+                }
+                return isEmpty;
+            }
+
+        let Rdvs =[]
+        const deleteRdv = (ev) =>{
+          ev.preventDefault(); // tostop the form submitting
+          if(!checkEmptyInput()){
+          let Rdv = {
+            idRdv: Data.now(),//current timestamp
+
+          }
+
+          document.forms[0].reset();//to clear the doc for the next entries
+          //document.querySelector['form'].reset();
+        }
+        }
+        document.getElementById("btn_Rdv").addEventListener('click', deleteRdv);
+        document.getElementById("btn_Rdv").addEventListener('click',alert('Randez-vous supprimé de votre liste avec succès'));
+      </script> -->
+
+    </body>
+
+
+</html>

@@ -2,7 +2,7 @@
 <html>
     <head>
     	<meta charset='utf-8'>
-    	<title> Ajouter un patient </title>
+    	<title> Afficher les rendez-vous d'un patient</title>
     	<script type="text/javascript" src="./contents/jquery/jquery-3.4.1.min.js"></script>
     	<script src="./contents/bootstrap/js/bootstrap.min.js"></script>
         <!-- Bootstrap CSS -->
@@ -13,27 +13,9 @@
         </style>
     </head>
     <body> 
+      
       <br>
       <br>
-<form>
-<div class="login-box-delete">
-<h1>     Liste des randz-vous   </h1>
-      <br>
-  <div class="form-row">
-    <div class="col-md-4 mb-3">
-      <label>Nom</label>
-      <input type="text" class="form-control" id="nom_pat" placeholder="Nom"  required>
-    </div>
-    <div class="col-md-4 mb-3">
-      <label>Prénom</label>
-      <input type="text" class="form-control" id="pre_pat" placeholder="Prénom" required>
-    </div> 
-  </div>
-  <br>
-  <br>
-  <button class="button" type="submit" id="afficherRDV">Afficher</button>
- </div>
-</form>
 <div class="container" id="rdvList">
   <table class="table table-striped" id="table" border="1" >
   <thead>

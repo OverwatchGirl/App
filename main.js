@@ -42,27 +42,6 @@ app.on('ready', function(){
 
 //Handle create add window
 
-function createAddRdvWindow(){
-	//create new Window
-  addWindow = new BrowserWindow({
-  	width: 800,
-  	height: 500,
-  	title:'Ajouter un randez-vous'
-  });
-  //load html into window
-  addWindow.loadURL(url.format({
-  	pathname: path.join(__dirname, 'addRdvWindow.html'),
-  	protocol: 'file:',
-  	slashes: true
-  }));
-  ///Carbage collection handle
-  addWindow.on('close', function(){
-  	addWindow = null;
-  });
-  addWindow.webContents.openDevTools();
-
-
-}
 function createAddPatWindow(){
 	//create new Window
   addWindow = new BrowserWindow({
@@ -83,44 +62,7 @@ function createAddPatWindow(){
   });
 
 }
-function createEditRdvWindow(){
-	//create new Window
-  addWindow = new BrowserWindow({
-  	width: 800,
-  	height: 500,
-  	title:'Modifier un randez-vous'
-  });
-  //load html into window
-  addWindow.loadURL(url.format({
-  	pathname: path.join(__dirname, 'editRdvWindow.html'),
-  	protocol: 'file:',
-  	slashes: true
-  }));
-  ///Carbage collection handle
-  addWindow.on('close', function(){
-  	addWindow = null;
-  });
-}
-function createEditPatWindow(){
-	//create new Window
-  addWindow = new BrowserWindow({
-  	width: 800,
-  	height: 500,
-  	title:'Modifier les données dun patient'
-  });
-  //load html into window
-  addWindow.loadURL(url.format({
-  	pathname: path.join(__dirname, 'editPatWindow.html'),
-  	protocol: 'file:',
-  	slashes: true
-  }));
 
-  ///Carbage collection handle
-  addWindow.on('close', function(){
-  	addWindow = null;
-  });
-
-}
 function createDeletePatWindow(){
 	//create new Window
   addWindow = new BrowserWindow({
@@ -141,26 +83,7 @@ function createDeletePatWindow(){
   });
 
 }
-function createDeleteRdvWindow(){
-	//create new Window
-  addWindow = new BrowserWindow({
-  	width: 800,
-  	height: 500,
-  	title:'Supprimer un randez-vous'
-  });
-  //load html into window
-  addWindow.loadURL(url.format({
-  	pathname: path.join(__dirname, 'deleteRdvWindow.html'),
-  	protocol: 'file:',
-  	slashes: true
-  }));
 
-  ///Carbage collection handle
-  addWindow.on('close', function(){
-  	addWindow = null;
-  });
-
-}
 function createDisplayRdvWindow(){
 	//create new Window
   addWindow = new BrowserWindow({
@@ -223,6 +146,28 @@ function createShowRdvWindow(){
 
 }
 
+
+function createShowRdvSpec(){
+	//create new Window
+  addWindow = new BrowserWindow({
+  	width: 800,
+  	height: 500,
+  	title:'Afficher les randez-vous d"un patient'
+  });
+  //load html into window
+  addWindow.loadURL(url.format({
+  	pathname: path.join(__dirname, 'showRdvSpec.html'),
+  	protocol: 'file:',
+  	slashes: true
+  }));
+
+  ///Carbage collection handle
+  addWindow.on('close', function(){
+  	addWindow = null;
+  });
+
+}
+
 // // catch Rdv:add
 // ipcMain.on('Rdv:add', function(e, Rdv){
 // 	mainWindow.webConetnts.send('Rdv:add', Rdv);
@@ -257,48 +202,217 @@ ipc.on('AddPatient',(event,arg) => {
 		event.returnValue = patient;
 	  });
 })
+var id_pat;
+ipc.on('ajouterRDV',(event,arg) => {
+	
+	addWindow = new BrowserWindow({
+		width: 800,
+		height: 500,
+		title:'Ajouter un randez-vous'
+	});
+	//load html into window
+	addWindow.loadURL(url.format({
+		pathname: path.join(__dirname, 'addRdvWindow.html'),
+		protocol: 'file:',
+		slashes: true
+	}));
+	///Carbage collection handle
+	addWindow.on('close', function(){
+		addWindow = null;
+	});
+	addWindow.webContents.openDevTools();
+	id_pat = arg ['id'];
+	event.returnValue = id_pat;
+	
+})
+
 
 ipc.on('addRDV', (event,arg) => {
 
-	nomPat = arg ['nom_pat'];
-	prePat = arg ['pre_pat'];
 	date = arg ['date'];
 	heure = arg ['heure'];
 	objet = arg ['objet'];
 
-	date.split(' ')[1]= heure;
 	
-	Patient.findOne({where: {Nom:nomPat ,Prenom :prePat}}).then((patientFound)=>{
-        if (patientFound) {
-            RDV.create({
-                Objet: objet,
-                Date: date, 
-                patientId: patientFound.id
-              }).then(rdv => {
-                event.returnValue = rdv;
-              });
-        }
-        else event.returnValue = 'error'
+	Patient.findOne({where: {id : id_pat}}).then((patientFound)=>{
+		if (patientFound) {
+			RDV.create({
+				Objet: objet,
+				Date: date, 
+				patientId: patientFound.id
+			  }).then(rdv => {
+				event.returnValue = rdv;
+			  });
+		}
+		else event.returnValue = 'error'
 
 	});
 
 })
+
+
+var id_pat_rdv;
+ipc.on('afficherRDV', (event,arg) => {
+	addWindow = new BrowserWindow({
+		width: 800,
+		height: 500,
+		title:'Afficher les randez-vous d"un patient'
+	});
+	//load html into window
+	addWindow.loadURL(url.format({
+		pathname: path.join(__dirname, 'showRdvWindow.html'),
+		protocol: 'file:',
+		slashes: true
+	}));
+  
+	///Carbage collection handle
+	addWindow.on('close', function(){
+		addWindow = null;
+	});
+	id_pat_rdv = arg ['id'];
+	event.returnValue = id_pat_rdv;
+
+})
+
 ipc.on('getRdvsByPatient',(event,arg) => {
 
+	RDV.findAll({where: {patientId: id_pat_rdv}, raw : true,
+		  include: [{
+			model: Patient
+		  }]}).then(rdvs => {
+		
+		event.returnValue =rdvs;
+	  }).catch((err)=>console.log(err))
+	  
+  })
 
-  RDV.findAll({where: {patientId:arg['id']}, raw : true,
-        include: [{
-          model: Patient
-        }]}).then(rdvs => {
-      
-      event.returnValue =rdvs;
-	}).catch((err)=>console.log(err))
+var id_rdv;
+  ipc.on('modifierRDV', (event,arg) => {
+	addWindow = new BrowserWindow({
+		width: 800,
+		height: 500,
+		title:'Afficher les randez-vous d"un patient'
+	});
+	//load html into window
+	addWindow.loadURL(url.format({
+		pathname: path.join(__dirname, 'editRdvWindow.html'),
+		protocol: 'file:',
+		slashes: true
+	}));
+  
+	///Carbage collection handle
+	addWindow.on('close', function(){
+		addWindow = null;
+	});
+	id_rdv = arg ['id'];
+	event.returnValue = id_rdv;
+
+})
+
+ipc.on('getRdvById', (event,arg) => {
+	RDV.findOne({ where: { id: id_rdv }, raw: true }).then(rdv => {
+
+		event.returnValue = rdv;
+	  }).catch((err) => console.log(err))
+})
+
+ipc.on('editRDV', (event,arg) => {
+	date = arg ['date'];
+	heure = arg ['heure'];
+	objet = arg ['objet'];
+		
+		RDV.findOne({
+			where: { id: id_rdv // deletes all pugs whose age is 7
+				}
+		  }).then((rdvfound) => {
+			if (rdvfound) {
+			  RDV.update(
+				{
+				  Objet: objet,
+				  Date: date,
+				},
+				{
+				  where: {
+					id: id_rdv
+				  }
+				}).then(() => {
+				//   getPatientAppointmentWin.send('updatedAppPatient')
+				  event.returnValue = 'update successfully'
+				}).catch((err) => event.returnValue = 'error')
+			}
+			else {
+			  event.returnValue = 'Appointment not found'
+			}
+		  })
+
+		})
+
+
+
+ipc.on('deleteRDV',(event,arg) => {
+	idRDV= arg ['id'];
+	RDV.destroy(
+		{
+		  where: {
+			id: idRDV
+		  },
 	
+		}).then(() => event.returnValue = 'delete successfully')
+		.catch((err) => event.returnValue = 'error')
+})
+
+
+ipc.on('getCurrentDayRdvs',getCurrentDayRdvs)
+var date_spec
+ipc.on('openRdvSpec', (event,arg) => {
+
+	addWindow = new BrowserWindow({
+		width: 800,
+		height: 500,
+		title:'Modifier les données dun patient'
+	});
+	//load html into window
+	addWindow.loadURL(url.format({
+		pathname: path.join(__dirname, 'RdvSpec.html'),
+		protocol: 'file:',
+		slashes: true
+	}));
+  
+	///Carbage collection handle
+	addWindow.on('close', function(){
+		addWindow = null;
+	});
+	addWindow.webContents.openDevTools();
+	date_spec = arg['date']; 
+	event.returnValue = date_spec;
+	console.log(date_spec);
 
 
 })
 
-ipc.on('getCurrentDayRdvs',getCurrentDayRdvs)
+ipc.on('getSpecRdvs', (event, arg)=>{
+    RDV.findAll({where: { Date: date_spec },raw : true,
+      include: [{
+      model: Patient
+    }]
+  }).then(rdvs => {
+
+	  event.returnValue = rdvs;
+	  console.log(rdvs);
+	}).catch((err) => console.log(err))
+	console.log('jhekjh');
+	
+  })
+
+
+
+
+
+
+
+
+
+
 
 //create a meanu template
 const mainMenuTemplate = [
@@ -314,24 +428,13 @@ const mainMenuTemplate = [
 
 	},
 	{
-		label: 'Ajouter',
+		label: 'Afficher RDV par date', 
 		click(){
-			createAddRdvWindow();
-		}      
-	},
-	{
-		label: 'Modifier',
-		click(){
-			createEditRdvWindow();
-		}  
-	},
-	{
-		label: 'Supprimer',
-		click(){
-			createDeleteRdvWindow();
+			createShowRdvSpec();
 		} 
-	},
 
+	},
+	
 	]
 },
 {
@@ -350,25 +453,7 @@ const mainMenuTemplate = [
 			createAddPatWindow();
 		}     
 	},
-	{
-		label: 'Modifier',
-		click(){
-			createEditPatWindow();
-		} 
-	},
-	{
-		label: 'Randez-vous',
-		click(){
-			createShowRdvWindow();
-		} 
-	},
-	{
-		label: 'Supprimer',
-		click(){
-			createDeletePatWindow();
-		} 
-	}
-
+	
 	]
 },
 {
