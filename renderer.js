@@ -4,12 +4,10 @@ function loadCurrentDayRdvs(){
     const currentDayRdvs = ipc.sendSync('getCurrentDayRdvs')
     const CurrentDayRdvsItems = currentDayRdvs.reduce((html,r)=>{
         table = document.getElementById("tableCurrentDay") ;
-        html +=`
-             ${addHtmlTableRow(table , r)}
-                     
-        `
-         return html
-    }, '');
+          addHtmlTableRow(table , r)
+
+          return html
+    },'');
 
     const currentRdvList = document.getElementById('CurrentDayList');
     currentRdvList.innerHTML = CurrentDayRdvsItems;

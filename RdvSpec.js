@@ -1,37 +1,23 @@
 const ipc = require('electron').ipcRenderer;
-const {Patient,RDV} = require('./config')
 
 function loadRdvs(){
-  console.log('jhekjh');
-
     const rdvs = ipc.sendSync('getSpecRdvs')
     const rdvsItems = rdvs.reduce((html,r)=>{
-      table = document.getElementById("tablerdv1") ;
-        html +=`
-             ${addHtmlTableRow(table , r)}
+      table = document.getElementById('tablerdv1') ;
+      
+            addHtmlTableRow(table , r)
                      
-        `
+        
          return html
     }, '');
 
     const rdvList = document.getElementById('rdvList1');
     rdvList.innerHTML = rdvsItems;
-    console.log('jhekjh');
-    console.log(rdvs);
 }
 document.addEventListener("DOMContentLoaded", function(){
-  console.log('jhekjh');
     loadRdvs();
-  //  ipc.on('updatedPatients',loadPatients)
 });
 
-
-// function clearTable(table) {
-//   var rowCount = table.rows.length;
-//   for (var i = rowCount - 1; i > 0; i--) {
-//       table.deleteRow(i);
-//   }
-// }
 
 function addHtmlTableRow(table ,RDV)
 { 
@@ -49,8 +35,6 @@ cell4.innerHTML = RDV.Date.split(' ')[1];
 cell5.innerHTML = RDV.Objet;
 
 }
-
-
 
 
 module.exports = { loadRdvs}

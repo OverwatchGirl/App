@@ -1,14 +1,13 @@
 const ipc = require('electron').ipcRenderer;
-const {Patient,RDV} = require('./config')
 
 function loadPatients(){
     const patients = ipc.sendSync('getPatients')
     const patientsItems = patients.reduce((html,p)=>{
         table = document.getElementById("tablepat") ;
-        html +=`
-             ${addHtmlTableRow(table , p)}
+        
+             addHtmlTableRow(table , p)
                      
-        `
+      
          return html
     }, '');
 
@@ -42,8 +41,10 @@ cell3.innerHTML = Patient.DateOfBirth.split(' ')[0];
 cell4.innerHTML = Patient.Telephone;
 cell5.innerHTML = Patient.AdresseMail;
 cell6.innerHTML = Patient.InfoMed;
-cell7.innerHTML = html = ` <button type="button" onClick="ajouterRDV(${Patient.id})"> Ajouter </button> `
-cell8.innerHTML = html = ` <button type="button" onClick="afficherRDV(${Patient.id})"> Afficher </button> `
+cell7.innerHTML = html = `  <link rel="stylesheet" type="text/css" href="style.css">
+<button type="button" class="button3" onClick="ajouterRDV(${Patient.id})"> Ajouter </button> `
+cell8.innerHTML = html = `  <link rel="stylesheet" type="text/css" href="style.css">
+<button type="button" class="button3" onClick="afficherRDV(${Patient.id})"> Afficher </button> `
 
 }
 function ajouterRDV(id) {
@@ -57,8 +58,11 @@ function afficherRDV(id) {
   var data = {
     'id' : id , 
   }
-  ipc.sendSync('afficherRDV',data);
+  ipc.sendSync('displayRDV',data);
 }
+
+
+
 
 
 module.exports = { loadPatients }

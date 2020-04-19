@@ -5,10 +5,9 @@ function loadRdvs(){
     const rdvs = ipc.sendSync('getRdvs')
     const rdvsItems = rdvs.reduce((html,r)=>{
       table = document.getElementById("tablerdv") ;
-        html +=`
-             ${addHtmlTableRow(table , r)}
-                     
-        `
+             addHtmlTableRow(table , r)
+       
+        
          return html
     }, '');
 
@@ -40,14 +39,20 @@ var cell4 = newRow.insertCell(3);
 var cell5 = newRow.insertCell(4);
 var cell6 = newRow.insertCell(5);
 var cell7 = newRow.insertCell(6);
+var cell8 = newRow.insertCell(7);
+
 
 cell1.innerHTML = RDV['patient.Nom'];
 cell2.innerHTML = RDV['patient.Prenom'];
 cell3.innerHTML = RDV.Date.split(' ')[0];
 cell4.innerHTML = RDV.Date.split(' ')[1];
 cell5.innerHTML = RDV.Objet;
-cell6.innerHTML = html = ` <button type="button" onClick="editRDV(${RDV.id})"> Modifier </button> `
-cell7.innerHTML = html = ` <button type="button" onClick="deleteRDV(${RDV.id})"> Supprimer </button> `;
+cell6.innerHTML = html = `         <link rel="stylesheet" type="text/css" href="style.css">
+<button type="button" class="button3" onClick="editRDV(${RDV.id})"> Modifier </button> `
+cell7.innerHTML = html = ` <link rel="stylesheet" type="text/css" href="style.css">
+ <button type="button" class="button3" onClick="deleteRDV(${RDV.id})"> Supprimer </button> `;
+cell8.innerHTML = html = ` <link rel="stylesheet" type="text/css" href="style.css">
+ <button type="button" class="button3" onClick="printRDV(${RDV.id})"> Imprimer </button> `;
 
 
 }
@@ -69,9 +74,15 @@ function editRDV(id) {
     'id' : id , 
   }
   ipc.sendSync('modifierRDV',data);
-  table1 = document.getElementById("tablerdv") ;
-  clearTable(table1) ;
-  loadRdvs();
+ 
+
+}
+function printRDV(id) {
+  var data = {
+    'id' : id , 
+  }
+  ipc.sendSync('printRDV',data);
+ 
 
 }
 

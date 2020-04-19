@@ -1,22 +1,23 @@
 const ipc = require('electron').ipcRenderer;
-const { Patient } = require('../config')
 
 function loadRdvsByPatient(){
+  
   const rdvs = ipc.sendSync('getRdvsByPatient');
   const rdvsItems = rdvs.reduce((html,r)=>{
-      table = document.getElementById("table") ;
-      html +=`
-           ${addHtmlTableRow(table , r)}
-                   
-      `
+      table = document.getElementById('tableRdvPat') ;
+      
+          addHtmlTableRow(table , r)
+      
        return html
   }, '');
-  const rdvList = document.getElementById('rdvList');
+  const rdvList = document.getElementById('rdvListPat');
   rdvList.innerHTML = rdvsItems;
+
 }
+
+
 document.addEventListener("DOMContentLoaded", function(){
   loadRdvsByPatient();
-//  ipc.on('updatedPatients',loadPatients)
 });
 
 function addHtmlTableRow(table ,RDV)

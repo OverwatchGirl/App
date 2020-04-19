@@ -17,6 +17,9 @@ addPatient.addEventListener('click', function(){
          'tel' : tel.value,
          'info' : info.value,
    }
-   console.log(data.nom);
+
 ipc.sendSync('AddPatient', data);
 })
+
+
+  

@@ -2,19 +2,21 @@
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
-const {getPatients,addPatient} = require('./controllers/patientController')
-const {getRdvs,addRDV,getRdvsByPatient,getCurrentDayRdvs} = require('./controllers/rdvController')
-
+const {getPatients} = require('./controllers/patientController')
+const {getRdvs,getCurrentDayRdvs} = require('./controllers/rdvController')
+const {Op} = require ('sequelize')
+const fs = require ('fs')
+const os = require ('os')
+const shell= electron.shell;
 const dialog = require('electron').dialog;
 const {Patient,RDV} = require('./config')
 
 
-const {app, BrowserWindow, Menu, ipcMain} = electron;
+const {app, BrowserWindow, Menu} = electron;
 const ipc = electron.ipcMain;
 
 let mainWindow;
-let addRdvWindow;
-let addPatWindow;
+
 app.allowRendererProcessReuse = false;
 
 // Listen for the app to be ready
@@ -32,12 +34,10 @@ app.on('ready', function(){
 		nodeIntegration: true
 	  }
   }));
-  mainWindow.webContents.openDevTools();
   // Build menu from template
   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
   //insert menu
   Menu.setApplicationMenu(mainMenu);
-  mainWindow.webContents.openDevTools();
 });
 
 //Handle create add window
@@ -63,33 +63,13 @@ function createAddPatWindow(){
 
 }
 
-function createDeletePatWindow(){
-	//create new Window
-  addWindow = new BrowserWindow({
-  	width: 800,
-  	height: 500,
-  	title:'Supprimer un patient'
-  });
-  //load html into window
-  addWindow.loadURL(url.format({
-  	pathname: path.join(__dirname, 'deletePatWindow.html'),
-  	protocol: 'file:',
-  	slashes: true
-  }));
-
-  ///Carbage collection handle
-  addWindow.on('close', function(){
-  	addWindow = null;
-  });
-
-}
 
 function createDisplayRdvWindow(){
 	//create new Window
   addWindow = new BrowserWindow({
   	width: 800,
   	height: 500,
-  	title:'Afficher la liste des randez-vous'
+  	title:'Afficher la liste des rendez-vous'
   });
   //load html into window
   addWindow.loadURL(url.format({
@@ -122,37 +102,15 @@ function createDisplayPatWindow(){
   addWindow.on('close', function(){
   	addWindow = null;
   });
-  addWindow.webContents.openDevTools();
 
 }
-function createShowRdvWindow(){
-	//create new Window
-  addWindow = new BrowserWindow({
-  	width: 800,
-  	height: 500,
-  	title:'Afficher les randez-vous d"un patient'
-  });
-  //load html into window
-  addWindow.loadURL(url.format({
-  	pathname: path.join(__dirname, 'showRdvWindow.html'),
-  	protocol: 'file:',
-  	slashes: true
-  }));
-
-  ///Carbage collection handle
-  addWindow.on('close', function(){
-  	addWindow = null;
-  });
-
-}
-
 
 function createShowRdvSpec(){
 	//create new Window
   addWindow = new BrowserWindow({
   	width: 800,
   	height: 500,
-  	title:'Afficher les randez-vous d"un patient'
+  	title:'Afficher les rendez-vous d"un patient'
   });
   //load html into window
   addWindow.loadURL(url.format({
@@ -165,21 +123,7 @@ function createShowRdvSpec(){
   addWindow.on('close', function(){
   	addWindow = null;
   });
-
 }
-
-// // catch Rdv:add
-// ipcMain.on('Rdv:add', function(e, Rdv){
-// 	mainWindow.webConetnts.send('Rdv:add', Rdv);
-// 	addWindow.close();
-
-// });
-// // catch Pat:add
-// ipcMain.on('Pat:add', function(e, pat){
-// 	mainWindow.webConetnts.send('Pat:add', Pat);
-// 	addWindow.close();
-
-// });
 
 
 ipc.on('getPatients',getPatients)
@@ -208,7 +152,7 @@ ipc.on('ajouterRDV',(event,arg) => {
 	addWindow = new BrowserWindow({
 		width: 800,
 		height: 500,
-		title:'Ajouter un randez-vous'
+		title:'Ajouter un rendez-vous'
 	});
 	//load html into window
 	addWindow.loadURL(url.format({
@@ -220,25 +164,28 @@ ipc.on('ajouterRDV',(event,arg) => {
 	addWindow.on('close', function(){
 		addWindow = null;
 	});
-	addWindow.webContents.openDevTools();
 	id_pat = arg ['id'];
 	event.returnValue = id_pat;
+	
 	
 })
 
 
 ipc.on('addRDV', (event,arg) => {
 
-	date = arg ['date'];
-	heure = arg ['heure'];
+	date = arg ['date'].split('-')
+	heure = arg ['heure'].split(':')
 	objet = arg ['objet'];
 
+    date = date.map(e => parseInt(e))
+    heure = heure.map(e => parseInt(e))
+    datetime = new Date(date[2], date[0] - 1, date[1], heure[0] + 1, heure[1], 0)
 	
 	Patient.findOne({where: {id : id_pat}}).then((patientFound)=>{
 		if (patientFound) {
 			RDV.create({
 				Objet: objet,
-				Date: date, 
+				Date: datetime, 
 				patientId: patientFound.id
 			  }).then(rdv => {
 				event.returnValue = rdv;
@@ -252,11 +199,11 @@ ipc.on('addRDV', (event,arg) => {
 
 
 var id_pat_rdv;
-ipc.on('afficherRDV', (event,arg) => {
+ipc.on('displayRDV', (event,arg) => {
 	addWindow = new BrowserWindow({
 		width: 800,
 		height: 500,
-		title:'Afficher les randez-vous d"un patient'
+		title:'Afficher les rendez-vous d"un patient'
 	});
 	//load html into window
 	addWindow.loadURL(url.format({
@@ -291,7 +238,7 @@ var id_rdv;
 	addWindow = new BrowserWindow({
 		width: 800,
 		height: 500,
-		title:'Afficher les randez-vous d"un patient'
+		title:'Afficher les rendez-vous d"un patient'
 	});
 	//load html into window
 	addWindow.loadURL(url.format({
@@ -317,9 +264,15 @@ ipc.on('getRdvById', (event,arg) => {
 })
 
 ipc.on('editRDV', (event,arg) => {
-	date = arg ['date'];
-	heure = arg ['heure'];
+
+	date = arg ['date'].split('-')
+	heure = arg ['heure'].split(':')
 	objet = arg ['objet'];
+
+    date = date.map(e => parseInt(e))
+    heure = heure.map(e => parseInt(e))
+    datetime = new Date(date[2], date[0] - 1, date[1], heure[0] + 1, heure[1], 0)
+	
 		
 		RDV.findOne({
 			where: { id: id_rdv // deletes all pugs whose age is 7
@@ -329,7 +282,7 @@ ipc.on('editRDV', (event,arg) => {
 			  RDV.update(
 				{
 				  Objet: objet,
-				  Date: date,
+				  Date: datetime,
 				},
 				{
 				  where: {
@@ -363,9 +316,10 @@ ipc.on('deleteRDV',(event,arg) => {
 
 
 ipc.on('getCurrentDayRdvs',getCurrentDayRdvs)
+
+
 var date_spec
 ipc.on('openRdvSpec', (event,arg) => {
-
 	addWindow = new BrowserWindow({
 		width: 800,
 		height: 500,
@@ -377,21 +331,24 @@ ipc.on('openRdvSpec', (event,arg) => {
 		protocol: 'file:',
 		slashes: true
 	}));
-  
 	///Carbage collection handle
 	addWindow.on('close', function(){
 		addWindow = null;
 	});
-	addWindow.webContents.openDevTools();
 	date_spec = arg['date']; 
 	event.returnValue = date_spec;
-	console.log(date_spec);
 
 
 })
 
 ipc.on('getSpecRdvs', (event, arg)=>{
-    RDV.findAll({where: { Date: date_spec },raw : true,
+	var parts = date_spec.split('-');
+	var startDate = new Date(parts[0], parts[1] - 1, parts[2],00,00,0,1); 
+	const endDate = new Date(parts[0], parts[1] - 1, parts[2],25,59,0,1); 
+
+    RDV.findAll({where: {
+          Date: { [Op.between]: [startDate, endDate], }
+        },raw : true,
       include: [{
       model: Patient
     }]
@@ -400,13 +357,53 @@ ipc.on('getSpecRdvs', (event, arg)=>{
 	  event.returnValue = rdvs;
 	  console.log(rdvs);
 	}).catch((err) => console.log(err))
-	console.log('jhekjh');
 	
   })
+var id_rdv_print ; 
+  ipc.on ('printRDV', (event,arg) => {
+	addWindow = new BrowserWindow({
+		width: 800,
+		height: 500,
+		title:'Modifier les données dun patient'
+	});
+	//load html into window
+	addWindow.loadURL(url.format({
+		pathname: path.join(__dirname, 'printRDV.html'),
+		protocol: 'file:',
+		slashes: true
+	}));
+	///Carbage collection handle
+	addWindow.on('close', function(){
+		addWindow = null;
+	});
+	addWindow.webContents.openDevTools()
+	id_rdv_print = arg['id']; 
+	event.returnValue = date_spec;
 
 
+})
 
 
+ipc.on('getRdvPrint', (event,arg) => {
+
+	RDV.findOne({ where: { id: id_rdv_print }, raw: true }).then(rdv => {
+
+		event.returnValue = rdv;
+		
+	  }).catch((err) => console.log(err))
+
+
+})
+
+ipc.on('updateConfigs', (event, arg) => {
+    data = arg
+    console.log('\n updateConfigs is recieved \n')
+    console.log(arg+'\n')
+    fs.writeFile('./config.json', JSON.stringify(data),function(){
+      mainWindow.send('updatedConfigs')
+      event.returnValue = "received";
+    })
+  })
 
 
 
@@ -418,7 +415,7 @@ ipc.on('getSpecRdvs', (event, arg)=>{
 const mainMenuTemplate = [
 {
 
-	label: 'Randez-vous',
+	label: 'Rendez-vous',
 	submenu :[
 	{
 		label: 'Liste', 
