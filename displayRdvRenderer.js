@@ -1,7 +1,8 @@
 const ipc = require('electron').ipcRenderer;
-const {Patient,RDV} = require('./config')
+
 
 function loadRdvs(){
+ 
     const rdvs = ipc.sendSync('getRdvs')
     const rdvsItems = rdvs.reduce((html,r)=>{
       table = document.getElementById("tablerdv") ;
@@ -58,6 +59,7 @@ cell8.innerHTML = html = ` <link rel="stylesheet" type="text/css" href="style.cs
 }
 
 
+
 function deleteRDV(id) {
   var data = {
     'id' : id , 
@@ -74,7 +76,6 @@ function editRDV(id) {
     'id' : id , 
   }
   ipc.sendSync('modifierRDV',data);
- 
 
 }
 function printRDV(id) {

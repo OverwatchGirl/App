@@ -20,11 +20,12 @@ let mainWindow;
 app.allowRendererProcessReuse = false;
 
 // Listen for the app to be ready
+var mainWindowP;
 app.on('ready', function(){
 //create new Window
-  mainWindow = new BrowserWindow({});
+  mainWindowP = new BrowserWindow({});
   //load html into window
-  mainWindow.loadURL(url.format({
+  mainWindowP.loadURL(url.format({
 	  pathname: path.join(__dirname, 'mainWindow.html'),
 	  preload: path.join(__dirname, 'preload.js'),
 
@@ -63,24 +64,24 @@ function createAddPatWindow(){
 
 }
 
-
+var addWindow
 function createDisplayRdvWindow(){
 	//create new Window
-  addWindow = new BrowserWindow({
+  addWindow1 = new BrowserWindow({
   	width: 800,
   	height: 500,
   	title:'Afficher la liste des rendez-vous'
   });
   //load html into window
-  addWindow.loadURL(url.format({
+  addWindow1.loadURL(url.format({
   	pathname: path.join(__dirname, 'displayRdvWindow.html'),
   	protocol: 'file:',
   	slashes: true
   }));
 
   ///Carbage collection handle
-  addWindow.on('close', function(){
-  	addWindow = null;
+  addWindow1.on('close', function(){
+  	addWindow1 = null;
   });
 
 }
@@ -173,13 +174,14 @@ ipc.on('ajouterRDV',(event,arg) => {
 
 ipc.on('addRDV', (event,arg) => {
 
-	date = arg ['date'].split('-')
-	heure = arg ['heure'].split(':')
+
+	date = arg ['date'].split('-');
+	heure = arg ['heure'].split(':');
 	objet = arg ['objet'];
 
     date = date.map(e => parseInt(e))
     heure = heure.map(e => parseInt(e))
-    datetime = new Date(date[2], date[0] - 1, date[1], heure[0] + 1, heure[1], 0)
+    datetime = new Date(date[0], date[1] - 1, date[2], heure[0] + 1, heure[1], 0)
 	
 	Patient.findOne({where: {id : id_pat}}).then((patientFound)=>{
 		if (patientFound) {
@@ -194,6 +196,9 @@ ipc.on('addRDV', (event,arg) => {
 		else event.returnValue = 'error'
 
 	});
+	mainWindowP.reload();
+	addWindow1.reload();
+
 
 })
 
@@ -235,6 +240,7 @@ ipc.on('getRdvsByPatient',(event,arg) => {
 
 var id_rdv;
   ipc.on('modifierRDV', (event,arg) => {
+	addWindow1.close();
 	addWindow = new BrowserWindow({
 		width: 800,
 		height: 500,
@@ -264,14 +270,13 @@ ipc.on('getRdvById', (event,arg) => {
 })
 
 ipc.on('editRDV', (event,arg) => {
-
-	date = arg ['date'].split('-')
-	heure = arg ['heure'].split(':')
+	date = arg ['date'].split('-');
+	heure = arg ['heure'].split(':');
 	objet = arg ['objet'];
 
     date = date.map(e => parseInt(e))
     heure = heure.map(e => parseInt(e))
-    datetime = new Date(date[2], date[0] - 1, date[1], heure[0] + 1, heure[1], 0)
+    datetime = new Date(date[0], date[1] - 1, date[2], heure[0] + 1, heure[1], 0)
 	
 		
 		RDV.findOne({
@@ -297,7 +302,7 @@ ipc.on('editRDV', (event,arg) => {
 			  event.returnValue = 'Appointment not found'
 			}
 		  })
-
+		  mainWindowP.reload();
 		})
 
 
@@ -312,6 +317,7 @@ ipc.on('deleteRDV',(event,arg) => {
 	
 		}).then(() => event.returnValue = 'delete successfully')
 		.catch((err) => event.returnValue = 'error')
+		mainWindowP.reload();
 })
 
 
@@ -320,20 +326,20 @@ ipc.on('getCurrentDayRdvs',getCurrentDayRdvs)
 
 var date_spec
 ipc.on('openRdvSpec', (event,arg) => {
-	addWindow = new BrowserWindow({
+	mainWindowS = new BrowserWindow({
 		width: 800,
 		height: 500,
 		title:'Modifier les données dun patient'
 	});
 	//load html into window
-	addWindow.loadURL(url.format({
+	mainWindowS.loadURL(url.format({
 		pathname: path.join(__dirname, 'RdvSpec.html'),
 		protocol: 'file:',
 		slashes: true
 	}));
 	///Carbage collection handle
-	addWindow.on('close', function(){
-		addWindow = null;
+	mainWindowS.on('close', function(){
+		mainWindowS = null;
 	});
 	date_spec = arg['date']; 
 	event.returnValue = date_spec;
@@ -360,23 +366,23 @@ ipc.on('getSpecRdvs', (event, arg)=>{
 	
   })
 var id_rdv_print ; 
+var printWindow;
   ipc.on ('printRDV', (event,arg) => {
-	addWindow = new BrowserWindow({
+	printWindow = new BrowserWindow({
 		width: 800,
 		height: 500,
 		title:'Modifier les données dun patient'
 	});
 	//load html into window
-	addWindow.loadURL(url.format({
+	printWindow.loadURL(url.format({
 		pathname: path.join(__dirname, 'printRDV.html'),
 		protocol: 'file:',
 		slashes: true
 	}));
 	///Carbage collection handle
-	addWindow.on('close', function(){
-		addWindow = null;
+	printWindow.on('close', function(){
+		printWindow = null;
 	});
-	addWindow.webContents.openDevTools()
 	id_rdv_print = arg['id']; 
 	event.returnValue = date_spec;
 
@@ -386,7 +392,9 @@ var id_rdv_print ;
 
 ipc.on('getRdvPrint', (event,arg) => {
 
-	RDV.findOne({ where: { id: id_rdv_print }, raw: true }).then(rdv => {
+	RDV.findOne({ where: { id: id_rdv_print }, raw: true, include: [{
+		model: Patient
+	  }] }).then(rdv => {
 
 		event.returnValue = rdv;
 		
@@ -395,20 +403,13 @@ ipc.on('getRdvPrint', (event,arg) => {
 
 })
 
-ipc.on('updateConfigs', (event, arg) => {
-    data = arg
-    console.log('\n updateConfigs is recieved \n')
-    console.log(arg+'\n')
-    fs.writeFile('./config.json', JSON.stringify(data),function(){
-      mainWindow.send('updatedConfigs')
-      event.returnValue = "received";
-    })
+ipc.on('print-to-pdf', function (event) {
+	console.log('ksddkq');
+    printWindow.webContents.print({ printBackground: true, landscape: true }, function (error, data) {
+      if (error) appointmentWin.close()
+	})
+	console.log('iiih');
   })
-
-
-
-
-
 
 
 //create a meanu template
